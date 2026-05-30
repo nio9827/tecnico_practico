@@ -13,20 +13,6 @@ urlpatterns = [
     path("usuarios/crear/",               views.crear_usuario,         name="crear_usuario"),
     path("usuarios/<int:user_id>/toggle/", views.toggle_usuario_activo, name="toggle_usuario"),
     path("cuenta/cambiar-password/", views.cambiar_password, name="cambiar_password"),
-
-]
-
-
-'''    
-
-
-    # ── Dashboards ───────────────────────────────────────────────────────────
-
-    # ── Gestión de usuarios (solo Admin) ─────────────────────────────────────
-
-    # ── Cambio de contraseña (usuario autenticado) ───────────────────────────
-
-    # ── Recuperación de contraseña via email ─────────────────────────────────
     path(
         "password-reset/",
         views.PasswordResetCustomView.as_view(),
@@ -42,8 +28,12 @@ urlpatterns = [
         views.PasswordResetConfirmCustomView.as_view(),
         name="password_reset_confirm",
     ),
+
     path(
         "password-reset/complete/",
         views.PasswordResetCompleteCustomView.as_view(),
         name="password_reset_complete",
-    ),'''
+    ),
+]
+
+

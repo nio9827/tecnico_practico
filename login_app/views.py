@@ -157,9 +157,9 @@ class PasswordResetCustomView(PasswordResetView):
     Django genera un token seguro y envía el email de recuperación
     usando el backend SMTP configurado en settings.py (Gmail).
     """
-    template_name      = "login_app/password_reset_form.html"
-    email_template_name = "login_app/emails/password_reset_email.html"
-    subject_template_name = "login_app/emails/password_reset_subject.txt"
+    template_name      = "password_reset_form.html"
+    email_template_name = "emails/password_reset_email.html"
+    subject_template_name = "emails/password_reset_subject.txt"
     form_class         = CustomPasswordResetForm
     success_url        = reverse_lazy("login_app:password_reset_done")
     # Enviar solo a usuarios activos
@@ -168,19 +168,19 @@ class PasswordResetCustomView(PasswordResetView):
 
 class PasswordResetDoneCustomView(PasswordResetDoneView):
     """Paso 2: confirmación de que el email fue enviado."""
-    template_name = "login_app/password_reset_done.html"
+    template_name = "password_reset_done.html"
 
 
 class PasswordResetConfirmCustomView(PasswordResetConfirmView):
     """Paso 3: el usuario ingresa su nueva contraseña desde el link del email."""
-    template_name = "login_app/password_reset_confirm.html"
+    template_name = "password_reset_confirm.html"
     form_class    = CustomSetPasswordForm
     success_url   = reverse_lazy("login_app:password_reset_complete")
 
 
 class PasswordResetCompleteCustomView(PasswordResetCompleteView):
     """Paso 4: contraseña reestablecida con éxito."""
-    template_name = "login_app/password_reset_complete.html"
+    template_name = "password_reset_complete.html"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
