@@ -78,7 +78,7 @@ def logout_view(request):
 def dashboard_admin(request):
     """Panel exclusivo para Administradores."""
     users = CustomUser.objects.all().order_by("role", "email")
-    return render(request, "login_app/dashboard_admin.html", {
+    return render(request, "dashboard_admin.html", {
         "users": users,
         "total_admins":    users.filter(role=CustomUser.Role.ADMIN).count(),
         "total_analistas": users.filter(role=CustomUser.Role.ANALISTA).count(),
@@ -88,7 +88,7 @@ def dashboard_admin(request):
 @any_role_required
 def dashboard_analista(request):
     """Panel para Analistas (y también accesible por Admins)."""
-    return render(request, "login_app/dashboard_analista.html")
+    return render(request, "dashboard_analista.html")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -106,7 +106,7 @@ def crear_usuario(request):
         messages.success(request, _(f"Usuario {user.email} creado exitosamente."))
         return redirect("login_app:dashboard_admin")
 
-    return render(request, "login_app/crear_usuario.html", {"form": form})
+    return render(request, "crear_usuario.html", {"form": form})
 
 
 @admin_required
@@ -144,7 +144,7 @@ def cambiar_password(request):
         messages.success(request, _("Contraseña actualizada correctamente."))
         return _redirect_by_role(request.user)
 
-    return render(request, "login_app/cambiar_password.html", {"form": form})
+    return render(request, "cambiar_password.html", {"form": form})
 
 
 # ─────────────────────────────────────────────────────────────────────────────

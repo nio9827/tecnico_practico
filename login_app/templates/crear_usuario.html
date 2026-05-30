@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}Crear usuario — Sistema de Gestión{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-3 fade-up">
+    <ol class="breadcrumb" style="font-size:.8rem;background:none;padding:0;margin:0">
+      <li class="breadcrumb-item">
+        <a href="{% url 'login_app:dashboard_admin' %}" style="color:var(--accent);text-decoration:none">
+          <i class="bi bi-speedometer2 me-1"></i>Panel Admin
+        </a>
+      </li>
+      <li class="breadcrumb-item active" style="color:var(--text-muted)">Crear usuario</li>
+    </ol>
+  </nav>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+
+      <!-- Header -->
+      <div class="mb-4 fade-up">
+        <h2 style="font-size:1.4rem;font-weight:600;color:#f1f5f9;margin-bottom:.3rem">
+          <i class="bi bi-person-plus-fill me-2" style="color:var(--accent)"></i>Crear nuevo usuario
+        </h2>
+        <p style="font-size:.85rem;color:var(--text-muted);margin:0">
+          Completa los campos para registrar un nuevo usuario en el sistema.
+        </p>
+      </div>
+
+      <!-- Form card -->
+      <div class="card-panel fade-up fade-up-1">
+        <div class="card-body">
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="row g-3">
+
+              <!-- Nombre -->
+              <div class="col-12 col-sm-6">
+                <label class="form-label" for="{{ form.first_name.id_for_label }}">
+                  Nombre <span style="color:var(--danger)">*</span>
+                </label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                  <div style="color:var(--danger);font-size:.75rem;margin-top:.25rem">
+                    {{ form.first_name.errors|join:", " }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Apellido -->
+              <div class="col-12 col-sm-6">
+                <label class="form-label" for="{{ form.last_name.id_for_label }}">
+                  Apellido <span style="color:var(--danger)">*</span>
+                </label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                  <div style="color:var(--danger);font-size:.75rem;margin-top:.25rem">
+                    {{ form.last_name.errors|join:", " }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Email -->
+              <div class="col-12">
+                <label class="form-label" for="{{ form.email.id_for_label }}">
+                  Correo electrónico <span style="color:var(--danger)">*</span>
+                </label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                  <div style="color:var(--danger);font-size:.75rem;margin-top:.25rem">
+                    {{ form.email.errors|join:", " }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Username -->
+              <div class="col-12">
+                <label class="form-label" for="{{ form.username.id_for_label }}">
+                  Nombre de usuario <span style="color:var(--danger)">*</span>
+                </label>
+                {{ form.username }}
+                <div style="font-size:.75rem;color:#475569;margin-top:.3rem">
+                  Solo letras, números y los caracteres @/./+/-/_ .
+                </div>
+                {% if form.username.errors %}
+                  <div style="color:var(--danger);font-size:.75rem;margin-top:.25rem">
+                    {{ form.username.errors|join:", " }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Rol -->
+              <div class="col-12">
+                <label class="form-label" for="{{ form.role.id_for_label }}">
+                  <i class="bi bi-shield me-1" style="color:var(--accent)"></i>
+                  Rol <span style="color:var(--danger)">*</span>
+                </label>
+                <select name="role" id="{{ form.role.id_for_label }}" class="form-select">
+                  {% for value, label in form.fields.role.choices %}
+                    <option value="{{ value }}" {% if form.role.value == value %}selected{% endif %}>
+                      {{ label }}
+                    </option>
+                  {% endfor %}
+                </select>
+                {% if form.role.errors %}
+                  <div style="color:var(--danger);font-size:.75rem;margin-top:.25rem">
+                    {{ form.role.errors|join:", " }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Divisor -->
+              <div class="col-12">
+                <div class="divider-text">Contraseña</div>
+              </div>
+
+              <!-- Password 1 -->
+              <div class="col-12 col-sm-6">
+                <label class="form-label" for="{{ form.password1.id_for_label }}">
+                  Contraseña <span style="color:var(--danger)">*</span>
+                </label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                  <div style="color:var(--danger);font-size:.75rem;margin-top:.25rem">
+                    {{ form.password1.errors|join:", " }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Password 2 -->
+              <div class="col-12 col-sm-6">
+                <label class="form-label" for="{{ form.password2.id_for_label }}">
+                  Confirmar contraseña <span style="color:var(--danger)">*</span>
+                </label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                  <div style="color:var(--danger);font-size:.75rem;margin-top:.25rem">
+                    {{ form.password2.errors|join:", " }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Reglas de contraseña -->
+              <div class="col-12">
+                <div style="background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.15);
+                            border-radius:8px;padding:.75rem 1rem;font-size:.75rem;color:#475569">
+                  <i class="bi bi-info-circle me-1" style="color:var(--accent)"></i>
+                  Mínimo 8 caracteres · No puede ser solo numérica · No puede ser una contraseña común.
+                </div>
+              </div>
+
+              <!-- Errores generales -->
+              {% if form.non_field_errors %}
+                <div class="col-12">
+                  <div class="alert alert-danger py-2">
+                    {{ form.non_field_errors|join:", " }}
+                  </div>
+                </div>
+              {% endif %}
+
+              <!-- Buttons -->
+              <div class="col-12 d-flex gap-2 pt-1">
+                <button type="submit" class="btn-primary-main flex-fill">
+                  <i class="bi bi-person-check-fill me-2"></i>Crear usuario
+                </button>
+                <a href="{% url 'login_app:dashboard_admin' %}"
+                   style="flex:0 0 auto;padding:.65rem 1.25rem;background:transparent;
+                          border:1px solid var(--border);border-radius:8px;color:var(--text-muted);
+                          text-decoration:none;font-size:.9rem;transition:all .2s"
+                   onmouseover="this.style.borderColor='var(--text-muted)'"
+                   onmouseout="this.style.borderColor='var(--border)'">
+                  Cancelar
+                </a>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

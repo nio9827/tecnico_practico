@@ -8,6 +8,12 @@ urlpatterns = [
     path("base/", views.base, name="base"),
     path("",          views.login_view,  name="login"),
     path("logout/",   views.logout_view, name="logout"),
+    path("admin-panel/",    views.dashboard_admin,    name="dashboard_admin"),
+    path("analista-panel/", views.dashboard_analista, name="dashboard_analista"),
+    path("usuarios/crear/",               views.crear_usuario,         name="crear_usuario"),
+    path("usuarios/<int:user_id>/toggle/", views.toggle_usuario_activo, name="toggle_usuario"),
+    path("cuenta/cambiar-password/", views.cambiar_password, name="cambiar_password"),
+
 ]
 
 
@@ -15,15 +21,10 @@ urlpatterns = [
 
 
     # ── Dashboards ───────────────────────────────────────────────────────────
-    path("admin-panel/",    views.dashboard_admin,    name="dashboard_admin"),
-    path("analista-panel/", views.dashboard_analista, name="dashboard_analista"),
 
     # ── Gestión de usuarios (solo Admin) ─────────────────────────────────────
-    path("usuarios/crear/",               views.crear_usuario,         name="crear_usuario"),
-    path("usuarios/<int:user_id>/toggle/", views.toggle_usuario_activo, name="toggle_usuario"),
 
     # ── Cambio de contraseña (usuario autenticado) ───────────────────────────
-    path("cuenta/cambiar-password/", views.cambiar_password, name="cambiar_password"),
 
     # ── Recuperación de contraseña via email ─────────────────────────────────
     path(
